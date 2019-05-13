@@ -29,12 +29,12 @@ public class LoginFormTest {
     public void testLogin() throws IOException {
         WebElement login = driver.findElement(By.id("user_login"));
         login.sendKeys("inna");
-
         WebElement passwd = driver.findElement(By.id("user_pass"));
         passwd.sendKeys("Inna123!");
-
         driver.findElement(By.id("loginform")).submit();
-
+    }
+    @Test(dependsOnMethods = "testLogin")
+    public void testAddArticle() throws IOException{
         driver.get("http://wordpress.local/wp-admin/post-new.php");
         driver.findElement(By.id("post-title-0")).sendKeys("Локаторы");
         driver.findElement(By.cssSelector("textarea.editor-default-block-appender__content")).click();
@@ -53,8 +53,6 @@ public class LoginFormTest {
         String article = driver.findElement(By.xpath("//div[@class='entry-content']/p")).getText();
         Assert.assertEquals(article, "Различают три вида локаторов");
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-       // String path = "C:\\Users\\Инна\\Desktop\\Скрины\\screen1.png";
-
         FileUtils.copyFile(scrFile, new File("C:\\Users\\Инна\\Desktop\\Скрины\\screen2.png"));
     }
     @AfterSuite
