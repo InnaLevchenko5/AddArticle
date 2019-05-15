@@ -1,64 +1,64 @@
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import java.util.function.Function;
 
 import javax.imageio.IIOException;
 import java.io.File;
 import java.io.IOException;
 
-public class LoginFormTest {
+public class LoginFormTest extends BaseTest {
 
-    private WebDriver driver;
-
-    @BeforeSuite
-    public void init()
-    {
-        System.setProperty("webdriver.chrome.driver", "src/test/tools/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.get("http://wordpress.local/wp-login.php");
-    }
+    private static By POST_BUTTON = By.cssSelector("button.editor-post-publish-button");
+    private static By CONTENT_TEXTAREA = By.cssSelector("textarea.editor-default-block-appender__content");
+    private static By SAVE_BUTTON = By.cssSelector("button.editor-post-publish-panel__toggle");
+    // start page
+    private static String url1 = "http://wordpress.local/wp-login.php";
+    //page for adding article
+    private static String url2 = "http://wordpress.local/wp-admin/post-new.php";
+    private String titleArticle = "Локаторы";
+    private String bodyArticle = "Различают три вида локаторов";
 
     @Test
-    public void testLogin() throws IOException {
-        WebElement login = driver.findElement(By.id("user_login"));
-        login.sendKeys("inna");
-        WebElement passwd = driver.findElement(By.id("user_pass"));
-        passwd.sendKeys("Inna123!");
-        driver.findElement(By.id("loginform")).submit();
+    @Parameters({"login", "password"})
+    public void testLogin(String login, String password) throws IOException {
+        getDriver().get(url1);
+        WebElement loginIn = getDriver().findElement(By.id("user_login"));
+        loginIn.sendKeys(login);
+        WebElement passwd = getDriver().findElement(By.id("user_pass"));
+        passwd.sendKeys(password);
+        getDriver().findElement(By.id("loginform")).submit();
     }
+
+
     @Test(dependsOnMethods = "testLogin")
-    public void testAddArticle() throws IOException{
-        driver.get("http://wordpress.local/wp-admin/post-new.php");
-        driver.findElement(By.id("post-title-0")).sendKeys("Локаторы");
-        driver.findElement(By.cssSelector("textarea.editor-default-block-appender__content")).click();
-        driver.findElement(By.cssSelector(".nux-dot-tip__disable")).click();
-
-        driver.findElement(By.cssSelector("p.mce-content-body")).sendKeys("Различают три вида локаторов");
-        driver.findElement(By.cssSelector("button.editor-post-publish-panel__toggle")).click();
-        driver.findElement(By.cssSelector("button.editor-post-publish-button")).click();
-
-
-        WebElement dynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.components-notice a")));
-        WebElement viewLink = driver.findElement(By.cssSelector("div.components-notice a"));
-        driver.get(viewLink.getAttribute("href"));
-        String title = driver.findElement(By.xpath("//header/h1")).getText();
-        Assert.assertEquals(title, "Локаторы");
-        String article = driver.findElement(By.xpath("//div[@class='entry-content']/p")).getText();
-        Assert.assertEquals(article, "Различают три вида локаторов");
-        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("C:\\Users\\Инна\\Desktop\\Скрины\\screen2.png"));
-    }
-    @AfterSuite
-    public void after()
+    public void testAddArticle()
     {
-        driver.quit();
-       // driver.close();
+        getDriver().get(url2);
+        getDriver().findElement(By.id("post-title-0")).sendKeys(titleArticle);
+        getDriver().findElement(CONTENT_TEXTAREA).click();
+        getDriver().findElement(By.cssSelector(".nux-dot-tip__disable")).click();
+        getDriver().findElement(By.cssSelector("p.mce-content-body")).sendKeys(bodyArticle);
+        getDriver().findElement(SAVE_BUTTON).click();
+        getDriver().findElement(POST_BUTTON).click();
+
+        (new WebDriverWait(getDriver(), 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.components-notice a")));
+    }
+    @Test(dependsOnMethods = "testAddArticle")
+    public void testCheckPost() throws IOException
+    {
+            WebElement viewLink = getDriver().findElement(By.cssSelector("div.components-notice a"));
+            getDriver().get(viewLink.getAttribute("href"));
+            String title = getDriver().findElement(By.xpath("//header/h1")).getText();
+            Assert.assertEquals(title, titleArticle);
+            String article = getDriver().findElement(By.xpath("//div[@class='entry-content']/p")).getText();
+            Assert.assertEquals(article, bodyArticle);
+
+        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
     }
 }
