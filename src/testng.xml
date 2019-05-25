@@ -4,9 +4,9 @@
     <listeners>
         <listener class-name="listeners.PropertyListener"/>
     </listeners>
-    <test name="LoginFormTest">
+    <test name="LoginAndAddPost">
         <classes>
-            <class name="LoginFormTest"/>
+            <class name="LoginAndAddPost"/>
         </classes>
     </test>
 </suite>

@@ -5,7 +5,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
-public class BaseTest  {
+public class BaseTest
+{
     private WebDriver driver;
 
     @BeforeSuite
@@ -38,8 +39,8 @@ public class BaseTest  {
     @AfterSuite
     public void after()
     {
-        if (driver != null) {
-            getDriver().quit();
-        }
+//        if (driver != null) {
+//            getDriver().quit();
+//        }
     }
 }
