@@ -14,21 +14,7 @@ public class BaseTest
     @Parameters({"browser","path"})
     public void init(String browser, String path) throws Exception
     {
-        System.setProperty(browser,path);
-        if (browser.equals("webdriver.chrome.driver")) {
-            driver = new ChromeDriver();
-        }
-        if (browser.equals("webdriver.gecko.driver")) {
-            driver = new FirefoxDriver();
-        }
-
-        if (driver == null) {
-            throw new Exception("Driver is not initialized");
-        }
-
-        System.setProperty("webdriver.gecko.driver", "Path to GeckDriver Executable File here");
-        driver = new FirefoxDriver();
-
+        driver = new ChromeDriver();
     }
 
     public WebDriver getDriver()
