@@ -16,6 +16,7 @@ public class LoginAndAddPost extends BaseTest
     private AddArticlePage addArticlePage;
     private ViewPostPage viewPostPage;
     //protected BasePage basePage;
+    private String viewLink;
 
     @BeforeClass
     public void init()
@@ -37,15 +38,16 @@ public class LoginAndAddPost extends BaseTest
     @Test(dependsOnMethods = "testLogin", description = "Добавление статьи")
     public void testAddArticle()
     {
-        addArticlePage.AddArticle();
+        viewLink = addArticlePage.AddArticle();
     }
 
     @Test(dependsOnMethods = "testAddArticle", description = "Просмотр статьи")
     public void testCheckPost() throws IOException
     {
-        viewPostPage.ViewPost();
-        //File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-       // FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
+
+        viewPostPage.ViewPost(viewLink);
+        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
     }
 
 }

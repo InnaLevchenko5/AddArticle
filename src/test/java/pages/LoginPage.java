@@ -20,8 +20,6 @@ public class LoginPage extends BasePage
     public void login (String login, String password)
     {
         driver.get("http://inna:Inna123!@wordpress.local/wp-login.php");
-        //driver.get("http://wordpress.local/");
-        driver.get(url1);
         writeText(loginField,login);
         writeText(passField,password);
         click(loginButton);

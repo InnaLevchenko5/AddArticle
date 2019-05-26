@@ -27,8 +27,8 @@ public class BaseTest
     @AfterSuite
     public void after()
     {
-        if (driver != null) {
-            getDriver().quit();
-        }
+       if (driver != null) {
+           getDriver().quit();
+       }
     }
 }
