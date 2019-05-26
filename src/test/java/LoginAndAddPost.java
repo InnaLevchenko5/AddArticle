@@ -3,6 +3,7 @@ import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.AddArticlePage;
+import pages.BasePage;
 import pages.LoginPage;
 import pages.ViewPostPage;
 
@@ -14,38 +15,37 @@ public class LoginAndAddPost extends BaseTest
     private LoginPage loginPage;
     private AddArticlePage addArticlePage;
     private ViewPostPage viewPostPage;
-    private String titleArticle = "Локаторы";
-    private String bodyArticle = "Различают три вида локаторов";
+    protected BasePage basePage;
 
     @BeforeClass
     public void init()
     {
+        //надо ли это? можно оставить только base?
+        basePage = new BasePage(getDriver());
         loginPage =  new LoginPage(getDriver());
         addArticlePage = new AddArticlePage(getDriver());
         viewPostPage = new ViewPostPage(getDriver());
     }
 
-    @Test
+    @Test(description = "Авторизация")
     @Parameters({"login", "password"})
     public void testLogin (String login, String password) throws IOException
     {
         loginPage.login(login,password);
     }
 
-    @Test(dependsOnMethods = "testLogin")
+    @Test(dependsOnMethods = "testLogin", description = "Добавление статьи")
     public void testAddArticle()
     {
         addArticlePage.AddArticle();
     }
 
-    @Test(dependsOnMethods = "testAddArticle")
+    @Test(dependsOnMethods = "testAddArticle", description = "Просмотр статьи")
     public void testCheckPost() throws IOException
     {
         viewPostPage.ViewPost();
-        Assert.assertEquals(viewPostPage.getTitle(), titleArticle);
-        Assert.assertEquals(viewPostPage.getArticle(), bodyArticle);
-        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
+        //File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+       // FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
     }
 
 }

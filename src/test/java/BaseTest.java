@@ -10,6 +10,7 @@ public class BaseTest
     private WebDriver driver;
 
     @BeforeSuite
+
     @Parameters({"browser","path"})
     public void init(String browser, String path) throws Exception
     {
@@ -25,8 +26,8 @@ public class BaseTest
             throw new Exception("Driver is not initialized");
         }
 
-      //  System.setProperty("webdriver.gecko.driver", "Path to GeckDriver Executable File here");
-       // driver = new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", "Path to GeckDriver Executable File here");
+        driver = new FirefoxDriver();
 
     }
 
