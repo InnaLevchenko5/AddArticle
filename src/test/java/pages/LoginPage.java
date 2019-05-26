@@ -10,6 +10,7 @@ public class LoginPage extends BasePage
     {
         super(driver);
     }
+
     // start page
     private static String url1 = "http://wordpress.local/wp-login.php";
     By loginButton = By.id("wp-submit");

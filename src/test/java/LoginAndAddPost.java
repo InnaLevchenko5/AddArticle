@@ -15,13 +15,13 @@ public class LoginAndAddPost extends BaseTest
     private LoginPage loginPage;
     private AddArticlePage addArticlePage;
     private ViewPostPage viewPostPage;
-    protected BasePage basePage;
+    //protected BasePage basePage;
 
     @BeforeClass
     public void init()
     {
         //надо ли это? можно оставить только base?
-        basePage = new BasePage(getDriver());
+        //basePage = new BasePage(getDriver());
         loginPage =  new LoginPage(getDriver());
         addArticlePage = new AddArticlePage(getDriver());
         viewPostPage = new ViewPostPage(getDriver());

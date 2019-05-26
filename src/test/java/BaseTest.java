@@ -14,6 +14,7 @@ public class BaseTest
     @Parameters({"browser","path"})
     public void init(String browser, String path) throws Exception
     {
+        System.setProperty(browser, path);
         driver = new ChromeDriver();
     }
 
@@ -26,8 +27,8 @@ public class BaseTest
     @AfterSuite
     public void after()
     {
-//        if (driver != null) {
-//            getDriver().quit();
-//        }
+        if (driver != null) {
+            getDriver().quit();
+        }
     }
 }
