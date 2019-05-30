@@ -5,10 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    SoftAssert softAssert = new SoftAssert();
 
     public BasePage(WebDriver driver)
     {
@@ -27,14 +29,22 @@ public class BasePage {
     }
 
 
-    public void writeText(By elementBy, String text) {
+    public void writeText(By elementBy, String text)
+    {
         waitVisibility(elementBy);
         driver.findElement(elementBy).sendKeys(text);
     }
 
-    public void assertEquals(By elementBy, String ExpectedText) {
+    public void hardAssertEquals(By elementBy, String ExpectedText)
+    {
         waitVisibility(elementBy);
         Assert.assertEquals(readText(elementBy), ExpectedText);
+    }
+    public SoftAssert softAssertEquals(By elementBy, String ExpectedText)
+    {
+        waitVisibility(elementBy);
+        softAssert.assertEquals(readText(elementBy),ExpectedText);
+        return softAssert;
     }
 
     public String readText(By elementBy)
