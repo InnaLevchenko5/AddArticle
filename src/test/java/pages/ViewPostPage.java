@@ -12,8 +12,8 @@ public class ViewPostPage extends BasePage{
 
     private static By TITLE_TEXT = By.xpath("//header/h1");
     private static By ARTICLE_TEXT = By.xpath("//div[@class='entry-content']/p");
-    private String titleArticle = "Локатор";
-    private String bodyArticle = "Различают три вида локаторо";
+    private String titleArticle = "Локаторы";
+    private String bodyArticle = "Различают три вида локаторов";
 
     public void ViewPost(String viewLink)
     {

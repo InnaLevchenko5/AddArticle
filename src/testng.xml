@@ -3,6 +3,7 @@
 <suite name="Suite1" parallel="none" >
     <listeners>
         <listener class-name="listeners.PropertyListener"/>
+        <listener class-name="listeners.TestListener"/>
     </listeners>
     <test name="LoginAndAddPost">
         <classes>

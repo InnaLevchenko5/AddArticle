@@ -1,16 +1,17 @@
+import listeners.IGetDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
-public class BaseTest
+public class BaseTest implements IGetDriver
 {
     private WebDriver driver;
 
     @BeforeSuite
-
     @Parameters({"browser","path"})
     public void init(String browser, String path) throws Exception
     {
@@ -22,7 +23,6 @@ public class BaseTest
     {
         return driver;
     }
-
 
     @AfterSuite
     public void after()
