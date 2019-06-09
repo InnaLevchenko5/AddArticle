@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,6 +41,7 @@ public class BasePage {
         waitVisibility(elementBy);
         Assert.assertEquals(readText(elementBy), ExpectedText);
     }
+    @Step
     public SoftAssert softAssertEquals(By elementBy, String ExpectedText)
     {
         waitVisibility(elementBy);

@@ -1,3 +1,5 @@
+import io.qameta.allure.Step;
+import listeners.TestListener;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.testng.Assert;
@@ -10,6 +12,7 @@ import pages.ViewPostPage;
 import java.io.File;
 import java.io.IOException;
 
+@Listeners(TestListener.class)
 public class LoginAndAddPost extends BaseTest
 {
     private LoginPage loginPage;
@@ -18,7 +21,7 @@ public class LoginAndAddPost extends BaseTest
     private String viewLink;
 
     @BeforeClass
-    public void init()
+    public void initPages()
     {
         loginPage =  new LoginPage(getDriver());
         addArticlePage = new AddArticlePage(getDriver());
@@ -43,8 +46,8 @@ public class LoginAndAddPost extends BaseTest
     {
 
         viewPostPage.ViewPost(viewLink);
-        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
+        //File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        //FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
     }
 
 }

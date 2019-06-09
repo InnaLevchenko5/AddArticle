@@ -1,9 +1,11 @@
 package pages;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 public class AddArticlePage extends BasePage
 {
@@ -23,7 +25,7 @@ public class AddArticlePage extends BasePage
     private static String url2 = "http://wordpress.local/wp-admin/post-new.php";
     private String titleArticle = "Локаторы";
     private String bodyArticle = "Различают три вида локаторов";
-
+    @Step("Добавление статьи")
     public String AddArticle()
     {
         driver.get(url2);

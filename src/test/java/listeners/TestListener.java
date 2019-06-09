@@ -1,5 +1,6 @@
 package listeners;
 
+import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -20,11 +21,10 @@ public class TestListener extends TestListenerAdapter {
         System.out.println("*****Error " + result.getName() + " test has failed****");
         String methodName = result.getName().trim();
         ITestContext context = result.getTestContext();
-
         Object obj = result.getInstance();
         driver = ((IGetDriver) obj).getDriver();
-
         takeScreenShot(methodName,driver);
+        saveAllureScreenshot("pictureFail.jpg");
     }
 
     @Override
@@ -33,11 +33,10 @@ public class TestListener extends TestListenerAdapter {
         String methodName = result.getName().trim();
         ITestContext context = result.getTestContext();
         driver = (WebDriver) context.getAttribute("driver");
-
         Object obj = result.getInstance();
         driver = ((IGetDriver) obj).getDriver();
-
         takeScreenShot(methodName,driver);
+        saveAllureScreenshot("pictureSuccess.jpg");
     }
 
     private void takeScreenShot(String methodName, WebDriver driver) {
@@ -49,4 +48,9 @@ public class TestListener extends TestListenerAdapter {
             e.printStackTrace();
         }
     }
+    @Attachment(value = "Вложение", fileExtension = ".jpg")
+    protected byte[] saveAllureScreenshot(String resourceName) {
+       return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
 }
