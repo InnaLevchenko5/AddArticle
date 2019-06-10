@@ -1,18 +1,9 @@
-import io.qameta.allure.Step;
-import listeners.TestListener;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.AddArticlePage;
-import pages.BasePage;
 import pages.LoginPage;
 import pages.ViewPostPage;
-
-import java.io.File;
 import java.io.IOException;
 
-@Listeners(TestListener.class)
 public class LoginAndAddPost extends BaseTest
 {
     private LoginPage loginPage;
@@ -30,7 +21,7 @@ public class LoginAndAddPost extends BaseTest
 
     @Test(description = "Авторизация")
     @Parameters({"login", "password"})
-    public void testLogin (String login, String password) throws IOException
+    public void testLogin (String login, String password) throws Exception
     {
         loginPage.login(login,password);
     }
@@ -42,12 +33,9 @@ public class LoginAndAddPost extends BaseTest
     }
 
     @Test(dependsOnMethods = "testAddArticle", description = "Просмотр статьи")
-    public void testCheckPost() throws IOException
+    public void testCheckPost()
     {
-
         viewPostPage.ViewPost(viewLink);
-        //File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        //FileUtils.copyFile(scrFile, new File("target/screenshots/screen.png"));
     }
 
 }

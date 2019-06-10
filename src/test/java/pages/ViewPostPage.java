@@ -1,8 +1,7 @@
 package pages;
-
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
-import java.io.IOException;
+
 
 public class ViewPostPage extends BasePage{
 

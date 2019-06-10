@@ -1,8 +1,6 @@
 import listeners.IGetDriver;
-import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 
@@ -12,7 +10,7 @@ public class BaseTest implements IGetDriver
 
     @BeforeSuite
     @Parameters({"browser","path"})
-    public void initBrowser(String browser, String path) throws Exception
+    public void initBrowser(String browser, String path)
     {
         System.setProperty(browser, path);
         driver = new ChromeDriver();
